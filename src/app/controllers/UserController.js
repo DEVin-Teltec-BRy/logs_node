@@ -8,6 +8,7 @@
 
 import User from '../models/User';
 import { Op } from 'sequelize';
+import logger from '../../config/logger';
 
 class UserController {
 
@@ -59,15 +60,15 @@ class UserController {
 
      
       if (userExists) {
-        return res.status(401).json({ message: 'Esse já existe' })
+        throw new Error(`${data.email} já existe`)
       }
 
-      
       const user = await User.create(data);
-
+      logger.info(`Usuário ${user.name} cadastrado com sucesso`)
       return res.json(user);
     } catch (error) {
-      return res.status(400).json({ message: 'Houve um erro ao tentar cadastrar o usuario' })
+      logger.error(`Error na aplicação: ${error.message} - status: ${400}`)
+      return res.status(400).json({ message: error.message })
     }
   }
 
