@@ -40,7 +40,9 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({ filename: 'logs.log' })
-  ]
+  ],
+  exceptionHandlers: [new winston.transports.File({ filename: "exceptions.log" })],
+  rejectionHandlers: [new winston.transports.File({ filename: "rejections.log" })],
 })
 
 export default logger

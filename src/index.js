@@ -2,6 +2,7 @@ import express from 'express';
 import routes from './routes';
 import './database';
 import Logger from './config/logger'
+import morgan from './config/morgan'
 class App {
 
   constructor() {
@@ -15,6 +16,7 @@ class App {
   middlewares() {
     console.log('Start middlewares')
     this.server.use(express.json())
+    this.server.use(morgan)
   }
 
   routes() {
